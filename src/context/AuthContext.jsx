@@ -1,12 +1,34 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import api from "../services/api";
 
+console.log("🔄 AuthContext carregado");
+
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [token, setToken] = useState(localStorage.getItem("token") || null);
     const [empresa, setEmpresa] = useState(null);
+    const [loading, setLoading] = useState(true); // usado pelo ProtectedRoute
+
+    useEffect(() => {
+        // sempre que o app iniciar, tenta restaurar a sessão
+        async function restoreSession() {
+            const storedToken = localStorage.getItem("token");
+            if (storedToken) {
+                try {
+                    api.defaults.headers.common["Authorization"] = `Bearer ${storedToken}`;
+                    setToken(storedToken);
+                    // opcional: validar token no backend se quiser
+                } catch (err) {
+                    console.error("Erro ao restaurar sessão:", err);
+                    logout();
+                }
+            }
+            setLoading(false);
+        }
+        restoreSession();
+    }, []);
 
     useEffect(() => {
         if (token) {
@@ -24,7 +46,7 @@ export function AuthProvider({ children }) {
                 localStorage.setItem("token", data.token);
                 api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
 
-                // Buscar empresa (logo, nome, etc.)
+                // Busca empresa associada
                 const empresaRes = await api.get(`/empresas/${empresa_id}`);
                 setEmpresa(empresaRes.data);
 
@@ -45,8 +67,29 @@ export function AuthProvider({ children }) {
         delete api.defaults.headers.common["Authorization"];
     }
 
+    const isAuthenticated = !!token;
+
+    // 👇 log para depuração
+    console.log("👤 Auth state =>", {
+        user,
+        token,
+        empresa,
+        loading,
+        isAuthenticated,
+    });
+
     return (
-        <AuthContext.Provider value={{ user, token, empresa, login, logout }}>
+        <AuthContext.Provider
+            value={{
+                user,
+                token,
+                empresa,
+                loading,
+                isAuthenticated,
+                login,
+                logout,
+            }}
+        >
             {children}
         </AuthContext.Provider>
     );

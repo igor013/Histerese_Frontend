@@ -6,14 +6,18 @@ export default function LoginPage() {
     const [login, setLogin] = useState("");
     const [senha, setSenha] = useState("");
     const [empresa_id, setEmpresaId] = useState("1");
-    const { login: handleLogin, empresa } = useAuth(); // ✅ agora empresa está definida
+    const { login: handleLogin, empresa } = useAuth();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
 
     async function onSubmit(e) {
         e.preventDefault();
         setLoading(true);
+
+        console.log("🚀 Tentando login com:", { login, senha, empresa_id });
         const success = await handleLogin(login.toUpperCase(), senha, empresa_id);
+        console.log("✅ Resultado do login:", success);
+
         setLoading(false);
         if (success) navigate("/");
     }
@@ -24,16 +28,12 @@ export default function LoginPage() {
                 {/* LOGO */}
                 <div className="flex flex-col items-center mb-6">
                     <img
-                        src={empresa?.logo_url || "/logo.png"} // ✅ busca logo real do backend
+                        src={empresa?.logo_url || "/logo.png"}
                         alt="Logo Histerese ERP"
                         className="w-20 h-20 mb-3 rounded-full bg-white/20 p-2 object-contain"
                     />
-                    <h1 className="text-2xl font-bold text-white tracking-wide">
-                        Histerese ERP
-                    </h1>
-                    <p className="text-gray-300 text-sm mt-1">
-                        Acesse sua conta para continuar
-                    </p>
+                    <h1 className="text-2xl font-bold text-white tracking-wide">Histerese ERP</h1>
+                    <p className="text-gray-300 text-sm mt-1">Acesse sua conta para continuar</p>
                 </div>
 
                 {/* FORMULÁRIO */}
@@ -90,4 +90,3 @@ export default function LoginPage() {
         </div>
     );
 }
-
