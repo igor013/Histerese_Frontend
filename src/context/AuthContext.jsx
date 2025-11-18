@@ -3,7 +3,8 @@ import api from "../services/api";
 
 console.log("🔄 AuthContext carregado");
 
-const AuthContext = createContext();
+// ✅ Exporta o contexto para ser usado no Header e em outros componentes
+export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
@@ -11,15 +12,15 @@ export function AuthProvider({ children }) {
     const [empresa, setEmpresa] = useState(null);
     const [loading, setLoading] = useState(true); // usado pelo ProtectedRoute
 
+    // 🔁 Restaura sessão ao iniciar o app
     useEffect(() => {
-        // sempre que o app iniciar, tenta restaurar a sessão
         async function restoreSession() {
             const storedToken = localStorage.getItem("token");
             if (storedToken) {
                 try {
                     api.defaults.headers.common["Authorization"] = `Bearer ${storedToken}`;
                     setToken(storedToken);
-                    // opcional: validar token no backend se quiser
+                    // (opcional) validar token no backend
                 } catch (err) {
                     console.error("Erro ao restaurar sessão:", err);
                     logout();
@@ -30,12 +31,16 @@ export function AuthProvider({ children }) {
         restoreSession();
     }, []);
 
+    // 🔐 Sempre que o token mudar, aplica no axios
     useEffect(() => {
         if (token) {
             api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        } else {
+            delete api.defaults.headers.common["Authorization"];
         }
     }, [token]);
 
+    // 🔓 Login
     async function login(login, senha, empresa_id) {
         try {
             const { data } = await api.post("/usuarios/login", { login, senha, empresa_id });
@@ -46,7 +51,7 @@ export function AuthProvider({ children }) {
                 localStorage.setItem("token", data.token);
                 api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
 
-                // Busca empresa associada
+                // busca a empresa associada
                 const empresaRes = await api.get(`/empresas/${empresa_id}`);
                 setEmpresa(empresaRes.data);
 
@@ -59,6 +64,7 @@ export function AuthProvider({ children }) {
         }
     }
 
+    // 🚪 Logout
     function logout() {
         setUser(null);
         setToken(null);
@@ -69,7 +75,7 @@ export function AuthProvider({ children }) {
 
     const isAuthenticated = !!token;
 
-    // 👇 log para depuração
+    // 👀 Log de depuração (aparece no console)
     console.log("👤 Auth state =>", {
         user,
         token,
@@ -95,6 +101,7 @@ export function AuthProvider({ children }) {
     );
 }
 
+// ✅ Hook personalizado para usar o contexto facilmente
 export function useAuth() {
     return useContext(AuthContext);
 }

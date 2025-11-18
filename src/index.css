@@ -1,3 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* =======================
+   🌈 BASE GLOBAL
+======================= */
+@layer base {
+    body {
+        @apply bg-[#f4f6f9] text-gray-800 font-sans;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-semibold text-gray-900;
+    }
+
+    a {
+        @apply text-primary hover:text-primary-dark transition;
+    }
+
+    /* Scrollbar leve */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        @apply bg-[#f4f6f9];
+    }
+
+    ::-webkit-scrollbar-thumb {
+        @apply bg-primary/60 rounded-md hover:bg-primary-dark;
+    }
+}

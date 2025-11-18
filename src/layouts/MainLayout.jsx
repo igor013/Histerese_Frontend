@@ -13,5 +13,6 @@ export default function MainLayout({ children }) {
                 <main className="flex-1 p-6 overflow-y-auto">{children}</main>
             </div>
         </div>
+
     );
 }

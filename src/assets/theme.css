@@ -1,0 +1,167 @@
+/* ================================
+   🎨 Histerese ERP - Tema Global
+   ================================ */
+
+/* Paleta Principal */
+:root {
+    --color-primary: #0284c7;
+    /* Azul principal */
+    --color-primary-dark: #0369a1;
+    --color-primary-light: #38bdf8;
+
+    --color-sidebar: #0369a1;
+    /* Azul do menu lateral */
+    --color-sidebar-dark: #025c92;
+    --color-sidebar-hover: #0ea5e9;
+
+    --color-header-bg: #ffffff;
+    --color-header-text: #1e293b;
+
+    --color-bg: #f8fafc;
+    /* Fundo das telas */
+    --color-border: #e2e8f0;
+
+    --color-text: #334155;
+    --color-text-light: #64748b;
+}
+
+/* ================================
+   🧩 Estilos base para ERP
+   ================================ */
+
+/* Fonte e suavização */
+body {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Containers e Cards */
+.card {
+    background: white;
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.05);
+    padding: 1.5rem;
+}
+
+/* Botões padrão */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    border-radius: 0.375rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 0.5rem 1.25rem;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-dark);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--color-primary-dark);
+    border: 1px solid var(--color-primary);
+}
+
+.btn-outline:hover {
+    background-color: var(--color-primary-light);
+    color: white;
+}
+
+/* Inputs e selects */
+input,
+select,
+textarea {
+    border: 1px solid var(--color-border);
+    border-radius: 0.375rem;
+    padding: 0.5rem;
+    outline: none;
+    background-color: white;
+    transition: border-color 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 1px var(--color-primary-light);
+}
+
+/* Títulos de página */
+.page-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-primary-dark);
+    margin-bottom: 1rem;
+}
+
+/* Tabelas */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.table th {
+    background-color: var(--color-primary);
+    color: white;
+    text-align: left;
+    padding: 0.75rem;
+    font-weight: 500;
+}
+
+.table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.table tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* Aba / Seções */
+.tab-header {
+    display: flex;
+    gap: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: 1rem;
+}
+
+.tab-header button {
+    padding: 0.5rem 1rem;
+    border-bottom: 2px solid transparent;
+    color: var(--color-text-light);
+    font-weight: 500;
+}
+
+.tab-header button.active {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+/* Alertas */
+.alert {
+    padding: 0.75rem 1rem;
+    border-radius: 0.375rem;
+    font-weight: 500;
+}
+
+.alert-success {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.alert-error {
+    background-color: #fee2e2;
+    color: #991b1b;
+}

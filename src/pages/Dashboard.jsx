@@ -1,10 +1,12 @@
-import MainLayout from "../layouts/MainLayout";
-
 export default function Dashboard() {
     return (
-        <MainLayout>
-            <h1 className="text-3xl font-bold text-blue-600 mb-2">Painel Principal</h1>
-            <p className="text-gray-600">Bem-vindo ao Histerese ERP!</p>
-        </MainLayout>
+        <div className="flex flex-col gap-6">
+            <h2 className="text-2xl font-semibold text-gray-700">Bem-vindo ao Histerese ERP</h2>
+            <div className="mt-8 bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                <p className="text-gray-500">
+                    Aqui você poderá visualizar indicadores, relatórios e atalhos futuramente.
+                </p>
+            </div>
+        </div>
     );
 }
